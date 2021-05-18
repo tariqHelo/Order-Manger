@@ -1,5 +1,6 @@
-@extends('layouts.app')
+@extends('admin.app')
 @section('content')
+@include('shared.msg')
 
 <div class="card">
     <div class="card-header">

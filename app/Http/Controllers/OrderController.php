@@ -4,82 +4,79 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
-
 class OrderController extends Controller
+
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
-    {
-        //
+    { dd(20);
+        $user_id = \request()->get('user_id') ;
+        $order_status_id = \request()->get('order_status_id');
+        $product_id = \request()->get('product_id') ;
+
+        $orders=Order::orderBy('id', 'desc');
+        if ($user_id!="") {
+            $orders->where('user_id', $user_id);
+        }
+        if ($price) {
+            $orders->where('price', 'like', "%{$price}%");
+        }
+        if ($product_id!=""){
+
+            $orders->where('product_id' , $product_id);
+        }
+        if ($order_status_id !=""){
+
+            $orders->where('order_status_id' , $order_status_id);
+        }
+        $status=OrderStatus::all();
+        $users=User::all();
+        $products=Product::orderby('title')->get();
+        $orders=$orders->paginate(10)->appends([
+            "user_id"=>$user_id,
+            "price"=>$price,
+            "product_id"=>$product_id,
+            "order_status_id"=>$order_status_id
+        ]);
+        return view('dashboard.orders.index',compact('orders','status','users','products'));
+    }
+    public function done($id){
+        $order_done=Order::find($id);
+        $order_done->update(['order_status_id'=>2]);
+        session()->flash('msg','s: Order has been Done');
+        return redirect()->back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function cancel($id){
+        $order_cancel=Order::find($id);
+        $order_cancel->update(['order_status_id'=> 3]);
+        session()->flash('msg','e: Order has been Cancel');
+        return redirect()->back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function pending($id){
+        $order_pending=Order::find($id);
+        $order_pending->update(['order_status_id'=>1]);
+        session()->flash('msg','s: Order has been pending');
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        
+        $orders=Order::all();
+        $order = Order::find($id);
+        return view('dashboard.orders.show')->with('order' , $order)->with('orders',$orders);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Order $order)
-    {
-        //
+        
+        $order = Order::find($id);
+        if(!$order){
+            Session()->flash('msg','Order not found');
+            return redirect()->back();
+        }
+        Order::destroy($id);
+        session()->flash("msg", " Order Deleted Successfully");
+        return redirect()->back();
     }
 }

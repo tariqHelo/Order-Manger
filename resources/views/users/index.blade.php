@@ -1,5 +1,7 @@
-@extends('layouts.app')
+@extends('admin.app')
 @section('content')
+@include('shared.msg')
+
     @can('user_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
@@ -19,9 +21,6 @@
             <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                 <thead>
                     <tr>
-                        <th width="10">
-
-                        </th>
                         <th>
                             {{ trans('cruds.user.fields.id') }}
                         </th>
@@ -31,9 +30,7 @@
                         <th>
                             {{ trans('cruds.user.fields.email') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
-                        </th>
+                    
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
@@ -45,9 +42,7 @@
                 <tbody>
                     @foreach($users as $key => $user)
                         <tr data-entry-id="{{ $user->id }}">
-                            <td>
-
-                            </td>
+                           
                             <td>
                                 {{ $user->id ?? '' }}
                             </td>
@@ -57,9 +52,7 @@
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
-                            <td>
-                                {{ $user->email_verified_at ?? '' }}
-                            </td>
+                          
                             <td>
                                 @foreach($user->roles as $key => $item)
                                     <span class="badge badge-info">{{ $item->title }}</span>

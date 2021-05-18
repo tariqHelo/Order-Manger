@@ -39,6 +39,8 @@ class PermissionsTableSeeder extends Seeder
            'id' => '6',
            'title' => 'permission_access',
            ],
+
+
            [
            'id' => '7',
            'title' => 'role_create',
@@ -59,8 +61,53 @@ class PermissionsTableSeeder extends Seeder
            'id' => '11',
            'title' => 'role_access',
            ],
-         
+
+
+           [
+           'id' => '12',
+           'title' => 'user_create',
+           ],
+           [
+           'id' => '13',
+           'title' => 'user_edit',
+           ],
+           [
+           'id' => '14',
+           'title' => 'user_show',
+           ],
+           [
+           'id' => '15',
+           'title' => 'user_delete',
+           ],
+           [
+           'id' => '16',
+           'title' => 'user_access',
+           ],
+
+
+           [
+           'id' => '17',
+           'title' => 'order_status',
+           ],
+           [
+           'id' => '18',
+           'title' => 'user_order',
+           ],
+           [
+           'id' => '19',
+           'title' => 'profile',
+           ]
+           ,
+           [
+           'id' => '20',
+           'title' => 'products',
+           ],
+           [
+           'id' => '21',
+           'title' => 'orders',
+           ]
            ];
+
 
            Permission::insert($permissions);
 

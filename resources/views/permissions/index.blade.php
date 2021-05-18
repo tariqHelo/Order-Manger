@@ -1,5 +1,7 @@
-@extends('layouts.app')
+@extends('admin.app')
 @section('content')
+@include('shared.msg')
+
 		<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 
@@ -84,6 +86,4 @@
 					</div>
 				</div>
 				<!-- END PAGE CONTENT-->
-			</div>
-		</div>
 @endsection

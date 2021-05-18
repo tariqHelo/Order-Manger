@@ -14,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+     $products = Product::get();
+    return view('products.index')->with('products' , $products);
     }
 
     /**
@@ -24,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+    return view('products.create');
     }
 
     /**
@@ -35,7 +36,22 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //   $this->validate($request, array(
+        //    'note' => 'required',
+        //   'quantity' => 'required|integer',
+        //   'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //   ));
+        //dd($request->all());
+        // $file = $request->file('img');
+        // $extension = $request->image->extension();
+        // $path = $request->image->store('public');
+
+         $imageName = basename($request->image->store("public"));
+         $request['image '] = $imageName;
+         $order = Product::create($request->all());
+         session()->flash('msg', "s: Product create successfully ");
+         return view('products.index');
     }
 
     /**
@@ -55,9 +71,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
-    {
-        //
+    public function edit($id)
+    {  $products = Product::find($id);
+        return view('products.edit')->with('products',$products);
     }
 
     /**
@@ -69,7 +85,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+         $imageName = basename($request->image->store("public"));
+         $request['image '] = $imageName;
+         $order = Product::update($request->all());
+         session()->flash('msg', "s: Product Updatedd successfully ");
+         return view('products.index');
     }
 
     /**
@@ -78,8 +98,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+           Product::destroy($id);
+           session()->flash("msg", " Product Deleted Successfully");
+           return redirect(route("products.index"));
     }
 }

@@ -7,6 +7,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserOrderController;
+use App\Http\Controllers\UserInfoController;
 
 
 use App\Http\Controllers\Admin\AdminController;
@@ -22,34 +26,47 @@ use App\Http\Controllers\Admin\AdminController;
 |
 */
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 
 Auth::routes();
 
+Route::get('/',[ HomeController::class,'index']);
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('admin.app');
+})->name('dashboard');
+  // Permissions
+  Route::delete('permissions/destroy',[PermissionsController::class,'massDestroy'])->name('permissions.massDestroy');
+  Route::resource('permissions', PermissionsController::class);
+  // Roles
+  Route::delete('roles/destroy', [RolesController::class,'massDestroy'])->name('roles.massDestroy');
+ // Route::get('roles', [RolesController::class, 'index'])->name('roles');
+  Route::resource('roles', RolesController::class);
+  // Users
+  Route::delete('users/destroy',[UsersController::class,'massDestroy'])->name('users.massDestroy');
+  Route::resource('users', UsersController::class);
+  //change-password
+  Route::get("/change-password", [ AdminController::class,'changePassword'])->name("change-password");
+  Route::put("/change-password", [ AdminController::class,'postChangePassword'])->name("post-change-password");
+  // Products
+  Route::resource('products', ProductController::class);
+  Route::get('products/{id}/delete', [ProductController::class , 'destroy'])->name('product-delete');
 
-Route::group(['prefix'=>'admin','middleware' => ['auth']], function () {
+ // orders
+  Route::resource('orders', OrderController::class);
+  // User Orders
+  Route::resource('user-order', UserOrderController::class);
 
-    // Permissions
-    Route::delete('permissions/destroy',[PermissionsController::class
-    ,'massDestroy'])->name('permissions.massDestroy');
-    Route::resource('permissions', PermissionsController::class);
-    // Roles
-    Route::delete('roles/destroy', [RolesController::class,'massDestroy'])->name('roles.massDestroy');
-    Route::resource('roles', RolesController::class);
-    // Users
-    Route::delete('users/destroy',[UsersController::class,'massDestroy'])->name('users.massDestroy');
-    Route::resource('users', UsersController::class);
-    //change-password
-    Route::get("/change-password", [ AdminController::class,'changePassword'])->name("change-password");
-    Route::put("/change-password", [ AdminController::class,'postChangePassword'])->name("post-change-password");
+ // User Info
+ Route::get('user-info', [UserInfoController::class , 'index'])->name('user-info');
 
-});
+  
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get("/order/{id}/delete","Admin\OrderController@destroy")->name('delete-order');
+    Route::get('/order-done/{id}','Admin\OrderController@done')->name('order.done');
+    Route::get('/order-pending/{id}','Admin\OrderController@pending')->name('order.pending');
+    Route::get('/order-cancel/{id}','Admin\OrderController@cancel')->name('order.cancel');
+    Route::get('/order_show/{id}','Admin\OrderController@show')->name('orders.show');
+
+    Route::get('/order_status/approve/{id}','Admin\OrderController@approve')->name('order.approve');
+    Route::get('/order_status/{id}','Admin\OrderController@cancel')->name('order.cancel');

@@ -11,6 +11,5 @@ class PermissionRoleTableSeeder extends Seeder
     {
         $admin_permissions = Permission::all();
         Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
-
     }
 }

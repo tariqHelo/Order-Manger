@@ -11,6 +11,7 @@ use App\Models\Role;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Session;
 
 class RolesController extends Controller
 {
@@ -36,6 +37,7 @@ class RolesController extends Controller
     {
         $role = Role::create($request->all());
         $role->permissions()->sync($request->input('permissions', []));
+        \Session::flash("msg", "تم إضافة الرول بنجاح");
 
         return redirect()->route('roles.index');
 
@@ -56,6 +58,7 @@ class RolesController extends Controller
     {
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
+        \Session::flash("msg", "تم تعديل الرول بنجاح");
 
         return redirect()->route('roles.index');
 
@@ -75,6 +78,7 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $role->delete();
+         session()->flash("msg", "w: تم الحذف بنجاح");
 
         return back();
 
@@ -83,6 +87,7 @@ class RolesController extends Controller
     public function massDestroy(MassDestroyRoleRequest $request)
     {
         Role::whereIn('id', request('ids'))->delete();
+         session()->flash("msg", "w: تم الحذف بنجاح");
 
         return response(null, Response::HTTP_NO_CONTENT);
 

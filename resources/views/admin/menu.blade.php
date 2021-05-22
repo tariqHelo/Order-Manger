@@ -22,6 +22,13 @@
                         </a>
                     </li> 
                     @endcan
+                    <li class="nav-item">
+                    <a href="{{route('settings.index')}}" class="nav-link nav-toggle">
+                            <i class="icon-bar-chart"></i>
+                            <span class="title">إعدادات الطلب</span>
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
                     @can('orders')
                     <li class="nav-item">
                         <a href="{{route('orders.index')}}" class="nav-link nav-toggle">
@@ -76,7 +83,7 @@
                     @endcan
                      @can('user_order') 
                         <li class="nav-item  ">
-                        <a href="{{route('user-order.create')}}" class="nav-link nav-toggle">
+                        <a href="{{route('user-order.index')}}" class="nav-link nav-toggle">
                                 <i class="icon-bar-chart"></i>
                                 <span class="title">طلب جديد</span>
                                 <span class="arrow"></span>

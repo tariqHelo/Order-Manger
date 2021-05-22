@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\UserOrder;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Order;
 
 class UserOrderController extends Controller
 {
@@ -13,8 +15,9 @@ class UserOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('UserOrder.index');
+    {    $products = Product::get();
+         $productsOrdered = Order::where('user_id' , auth()->id())->where('product_id' , '!=' , null)->get()->pluck('product_id')->all();
+         return view('UserOrder.index')->with('products' , $products)->with('ordered' , $productsOrdered);
     }
 
     /**
@@ -36,18 +39,24 @@ class UserOrderController extends Controller
   
     public function store(Request $request){
 
-        if(!$request->order_status_id){
-        $request['order_status_id'] = 1;
-        }
-        //get logged user from access_token
-        $request['user_id'] = $request->user()->id;
-        $request['total_price'] = $request['quantity'] * $request['price'];
-        $imageName = basename($request->imageFile->store("public"));
-        $request['image'] = $imageName;
-        $order = Order::create($request->all());
-        session()->flash('msg', "s: Order product create successfully ");
-        sleep(4);
-        return view('frontend.home.index');
+        // if(!$request->order_status_id){
+        // $request['order_status_id'] = 1;
+        // }
+        // //get logged user from access_token
+        // $request['user_id'] = $request->user()->id;
+        // $request['total_price'] = $request['quantity'] * $request['price'];
+        // $imageName = basename($request->imageFile->store("public"));
+        // $request['image'] = $imageName;
+        // $order = Order::create($request->all());
+        // session()->flash('msg', "s: Order product create successfully ");
+        // sleep(4);
+        // return view('frontend.home.index');
+
+           $imageName = basename($request->image->store("public"));
+           $request['image '] = $imageName;
+           $order = Order::create($request->all());
+           session()->flash('msg', "s: Order create successfully ");
+           return redirect(route("orders.index"));
         
     }
 

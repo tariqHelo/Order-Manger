@@ -12,6 +12,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserInfoController;
 
+use App\Http\Controllers\SettingController;
+
+
 
 use App\Http\Controllers\Admin\AdminController;
 
@@ -50,12 +53,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
   // Products
   Route::resource('products', ProductController::class);
   Route::get('products/{id}/delete', [ProductController::class , 'destroy'])->name('product-delete');
-
+ // User Info
+ Route::resource('settings', SettingController::class);
  // orders
   Route::resource('orders', OrderController::class);
-  // User Orders
+  Route::get('/products/order/{id}', [OrderController::class , 'orderProduct'])->name('order-product');
+  Route::get('/products/cancle-order/{id}', [OrderController::class , 'cancelOrderProduct'])->name('cancel-product-order');
+  // User-Orders
   Route::resource('user-order', UserOrderController::class);
-
  // User Info
  Route::get('user-info', [UserInfoController::class , 'index'])->name('user-info');
 

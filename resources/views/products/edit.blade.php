@@ -66,6 +66,14 @@
         <div class="portlet-body form">
             <form action="{{route('products.update',$products->id)}}" method="POST" class="form-horizontal form-row-seperated" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
+                <div class="form-body">
+                    <div class="form-group form-md-line-input has-success">
+                        <input type="text" value="{{$products->name}}" name="name" placeholder="الإسم" class="form-control" />
+                        <label for="form_control_1">الإسم</label>
+                        <span class="help-block">Typing...</span>
+                    </div>
+                </div>
                 <div class="form-body">
                     <div class="form-group form-md-line-input has-success">
                         <input type="number" value="{{$products->quantity}}" name="quantity" placeholder="الكمية" class="form-control" />
@@ -76,7 +84,7 @@
                 
                 <div class="form-body">
                     <div class="form-group form-md-line-input has-success">
-                        <input type="file" name="imageFile" class="form-control custom-file-input" id="form_control_1">
+                        <input type="file" name="image" class="form-control custom-file-input" id="form_control_1">
                         <label for="form_control_1">الصورة</label>
                     </div>
                       @if($products->image)

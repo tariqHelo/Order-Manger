@@ -14,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-     $products = Product::get();
-    return view('products.index')->with('products' , $products);
+     $products = Product::all();
+     return view('products.index')->with('products' , $products);
     }
 
     /**
@@ -51,7 +51,7 @@ class ProductController extends Controller
          $request['image '] = $imageName;
          $order = Product::create($request->all());
          session()->flash('msg', "s: Product create successfully ");
-         return view('products.index');
+         return redirect(route("products.index"));
     }
 
     /**
@@ -72,7 +72,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {  $products = Product::find($id);
+    { $products = Product::find($id);
         return view('products.edit')->with('products',$products);
     }
 
@@ -83,13 +83,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
-    {
-         $imageName = basename($request->image->store("public"));
-         $request['image '] = $imageName;
-         $order = Product::update($request->all());
+    public function update(Request $request, $id)
+    {   
+        if($request->image){
+            $imageName = basename($request->image->store("public"));
+            $request['image'] = $imageName;
+        }
+         Product::find($id)->update($request->all());
          session()->flash('msg', "s: Product Updatedd successfully ");
-         return view('products.index');
+           return redirect(route("products.index"));
     }
 
     /**

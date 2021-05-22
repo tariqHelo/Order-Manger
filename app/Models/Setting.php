@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Setting extends Model
 {
     use HasFactory;
+    public $table = 'settings';
 
-       protected $fillable = [
+    protected $fillable = [
          'note',
          'name',
          'quantity',
-         'image',
-       ];
-       public function orders(){
-         return $this->hasMany(UserOrder::class);
-       }
+         'image'
+    ];
+
 }

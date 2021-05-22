@@ -44,7 +44,9 @@
             <thead>
             <tr>
               <th> Order ID</th>
+                <th>name</th>
                 <th>Image</th>
+                <th>user</th>
                 <th> Quantity</th>
                 <th> Status</th>
                 <th> Status Action</th>
@@ -54,7 +56,52 @@
             </thead>
             <tbody>
 
+       @foreach($orders as $order)
+                <tr>
+                    <td>{{ $order->id}}</td>
+                    <td>{{ $order->name}}</td>
+                    <td> <img src='{{ asset("storage/".$order->image) }}' width='100' /></td>
+                    <td>{{ $order->user->name??'' }}</td>
+                    <td>{{ $order->quantity }}</td>
+                    {{--                    <td>{{ $order->order_status_id}}</td>--}}
+                 <td>
+                        @if($order->order_status_id==1)
+                            <span class="btn btn-warning btn-sm">Pending</span>
+                        @elseif($order->order_status_id==2)
+                            <span class="btn btn-success btn-sm">Done</span>
+                        @else($order->order_status_id==3)
+                            <span class="btn btn-danger btn-sm">Cancel</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if($order->order_status_id==1)
+                            <a href="" style="width: 80px" class="btn btn-success btn-sm" >Done</a>
+                            <a href="" style="width: 80px" class="btn btn-danger btn-sm" >Cancel</a>
+                        @elseif($order->order_status_id==2)
+                            <a href="" style="width: 80px" class="btn btn-warning btn-sm" >Pending</a>
+                            <a href="" style="width: 80px" class="btn btn-danger btn-sm" >Cancel</a>
+                        @elseif($order->order_status_id==3)
+                            <a href="" style="width: 80px" class="btn btn-success btn-sm" >Done</a>
+                            <a href="" style="width: 80px" class="btn btn-warning btn-sm" >Pending</a>
+                        @endif
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-primary btn-sm"><i
+                                class='fa fa-eye'></i></a>
+                        <a href="">
+                            <button onclick='return confirm("Are you sure??")' type="submit" class="btn btn-danger btn-sm">
+                                <i class='fa fa-trash'></i></button>
+                        </a>
+                </td>
+                </tr>
+               
+            @endforeach
          
             </tbody>
         </table>
 @endsection
+
+
+
+
+

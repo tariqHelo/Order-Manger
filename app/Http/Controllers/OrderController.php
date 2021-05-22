@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\OrderStatus;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -8,37 +11,43 @@ class OrderController extends Controller
 
 {
     public function index()
-    { dd(20);
-        $user_id = \request()->get('user_id') ;
-        $order_status_id = \request()->get('order_status_id');
-        $product_id = \request()->get('product_id') ;
+    { 
+        // $user_id = \request()->get('user_id') ;
+        // $price = \request()->get('price') ;
+        // $product_id = \request()->get('product_id') ;
+        // $order_status_id = \request()->get('order_status_id');
 
-        $orders=Order::orderBy('id', 'desc');
-        if ($user_id!="") {
-            $orders->where('user_id', $user_id);
-        }
-        if ($price) {
-            $orders->where('price', 'like', "%{$price}%");
-        }
-        if ($product_id!=""){
-
-            $orders->where('product_id' , $product_id);
-        }
-        if ($order_status_id !=""){
-
-            $orders->where('order_status_id' , $order_status_id);
-        }
+         $orders=Order::get();  
         $status=OrderStatus::all();
-        $users=User::all();
-        $products=Product::orderby('title')->get();
-        $orders=$orders->paginate(10)->appends([
-            "user_id"=>$user_id,
-            "price"=>$price,
-            "product_id"=>$product_id,
-            "order_status_id"=>$order_status_id
-        ]);
-        return view('dashboard.orders.index',compact('orders','status','users','products'));
+       
+        return view('orders.index',compact('orders','status'));
     }
+
+       public function store(Request $request){
+
+       // if(!$request->order_status_id){
+       // $request['order_status_id'] = 1;
+       // }
+       //get logged user from access_token
+    //    $request['user_id'] = $request->user()->id;
+    //    $imageName = basename($request->imageFile->store("public"));
+    //    $request['image'] = $imageName;
+    //    $order = Order::create($request->all());
+    //    session()->flash('msg', "s: Order product create successfully ");
+    //    sleep(4);
+      $request['user_id'] = $request->user()->id;
+       $imageName = basename($request->image->store("public"));
+       $request['image '] = $imageName;
+       $order = Order::create($request->all());
+       session()->flash('msg', "s: Order create successfully ");
+       return redirect(route("user-order.index"));
+       return view('frontend.home.index');
+
+       //dd($request->all());
+
+       
+       }
+
     public function done($id){
         $order_done=Order::find($id);
         $order_done->update(['order_status_id'=>2]);
@@ -69,7 +78,6 @@ class OrderController extends Controller
     }
     public function destroy($id)
     {
-        
         $order = Order::find($id);
         if(!$order){
             Session()->flash('msg','Order not found');
@@ -77,6 +85,20 @@ class OrderController extends Controller
         }
         Order::destroy($id);
         session()->flash("msg", " Order Deleted Successfully");
+        return redirect()->back();
+    }
+
+    public function orderProduct($id){
+        $product = Product::find($id);
+        Order::create([
+            'user_id' => auth()->id(),
+            'product_id'=>  $id
+        ]);
+        return redirect()->back();
+    }
+
+    public function cancelOrderProduct($id){
+        Order::where('product_id' , $id)->delete();
         return redirect()->back();
     }
 }

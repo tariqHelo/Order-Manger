@@ -15,9 +15,15 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
-            $table->longText('note');
-            $table->integer('quantity');
+             $table->foreignId("user_id")->nullable();
+             $table->foreign('user_id')->references('id')->on("users")->cascadeOnDelete()->cascadeOnUpdate();
+             $table->string('name');
+             $table->foreignId("product_id")->nullable();
+            $table->foreign('product_id')->references('id')->on("products")->cascadeOnDelete()->cascadeOnUpdate();
+             $table->string('image');
+             $table->longText('note');
+             $table->integer('quantity');
+             $table->integer('order_status_id')->default(0);
             $table->timestamps();
         });
     }

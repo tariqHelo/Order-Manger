@@ -18,6 +18,14 @@
                 <!-- BEGIN FORM-->
             <form action="{{route('products.store')}}" method="POST" class="form-horizontal form-row-seperated" enctype="multipart/form-data">
                 @csrf
+                 <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">الإسم  </label>
+                            <div class="col-md-9">
+                                <input type="text" name="name" placeholder="الإسم" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
                      <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">الكمية  </label>

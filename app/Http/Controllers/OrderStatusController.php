@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 
 class OrderStatusController extends Controller
 {
@@ -12,10 +15,38 @@ class OrderStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+   public function index()
+    { 
+        $user_id = \request()->get('user_id') ;
+        $product_id = \request()->get('product_id') ;
+        $order_status_id = \request()->get('order_status_id');
+        $orders=Order::orderBy('id','desc');
+        if ($user_id!="")
+        {
+            $orders->where('user_id' , $user_id);
+        }
+        if ($product_id!=""){
+
+            $orders->where('product_id' , $product_id);
+        }
+        if ($order_status_id !=""){
+
+        $orders->where('order_status_id' , $order_status_id);
+        }
+            $status=OrderStatus::all();
+            $users=User::all();
+            $products=Product::orderby('name')->get();
+            $orders=$orders->paginate(10)->appends([
+            "user_id"=>$user_id,
+            "product_id"=>$product_id,
+            "order_status_id"=>$order_status_id
+            ]);
+
+
+
+        return view('statusOrder.index',compact('orders','status','users','products'));
     }
+
 
     /**
      * Show the form for creating a new resource.

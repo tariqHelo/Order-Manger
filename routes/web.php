@@ -13,6 +13,7 @@ use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserInfoController;
 
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\OrderStatusController;
 
 
 
@@ -59,19 +60,23 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
   Route::resource('orders', OrderController::class);
   Route::get('/products/order/{id}', [OrderController::class , 'orderProduct'])->name('order-product');
   Route::get('/products/cancle-order/{id}', [OrderController::class , 'cancelOrderProduct'])->name('cancel-product-order');
+
+   Route::get("/order/{id}/delete",[OrderController::class , 'destroy'])->name('delete-order');
+   Route::get('/order-done/{id}',[OrderController::class , 'done'])->name('order.done');
+   Route::get('/order-pending/{id}',[OrderController::class ,'pending'])->name('order.pending');
+   Route::get('/order-cancel/{id}',[OrderController::class ,'cancel'])->name('order.cancel');
+   Route::get('/order_show/{id}',[OrderController::class ,'show'])->name('orders.show');
+
+   Route::get('/order_status/approve/{id}',[OrderController::class ,'approve'])->name('order.approve');
+   Route::get('/order_status/{id}',[OrderController::class ,'cancel'])->name('order.cancel');
+
   // User-Orders
   Route::resource('user-order', UserOrderController::class);
- // User Info
- Route::get('user-info', [UserInfoController::class , 'index'])->name('user-info');
+
+ // User status
+ Route::resource('user-status', OrderStatusController::class);
 
   
 
-
-    Route::get("/order/{id}/delete","Admin\OrderController@destroy")->name('delete-order');
-    Route::get('/order-done/{id}','Admin\OrderController@done')->name('order.done');
-    Route::get('/order-pending/{id}','Admin\OrderController@pending')->name('order.pending');
-    Route::get('/order-cancel/{id}','Admin\OrderController@cancel')->name('order.cancel');
-    Route::get('/order_show/{id}','Admin\OrderController@show')->name('orders.show');
-
-    Route::get('/order_status/approve/{id}','Admin\OrderController@approve')->name('order.approve');
-    Route::get('/order_status/{id}','Admin\OrderController@cancel')->name('order.cancel');
+   
+   

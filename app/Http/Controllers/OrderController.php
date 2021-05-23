@@ -3,45 +3,66 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\User;
-use App\Models\OrderStatus;
-
 use App\Models\Order;
+
+use App\Models\OrderStatus;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Http\Request;
 class OrderController extends Controller
 
 {
     public function index()
     { 
-        // $user_id = \request()->get('user_id') ;
-        // $price = \request()->get('price') ;
-        // $product_id = \request()->get('product_id') ;
-        // $order_status_id = \request()->get('order_status_id');
+        $user_id = \request()->get('user_id') ;
+        $product_id = \request()->get('product_id') ;
+        $order_status_id = \request()->get('order_status_id');
+        $orders=Order::orderBy('id','desc');
+        if ($user_id!="")
+        {
+            $orders->where('user_id' , $user_id);
+        }
+        if ($product_id!=""){
 
-         $orders=Order::get();  
-        $status=OrderStatus::all();
-       
-        return view('orders.index',compact('orders','status'));
+            $orders->where('product_id' , $product_id);
+        }
+        if ($order_status_id !=""){
+
+        $orders->where('order_status_id' , $order_status_id);
+        }
+            $status=OrderStatus::all();
+            $users=User::all();
+            $products=Product::orderby('name')->get();
+            $orders=$orders->paginate(10)->appends([
+            "user_id"=>$user_id,
+            "product_id"=>$product_id,
+            "order_status_id"=>$order_status_id
+            ]);
+
+
+
+        return view('orders.index',compact('orders','status','users','products'));
     }
 
        public function store(Request $request){
+      
+     // $image = $request->file('image')->getClientOriginalName();
 
-       // if(!$request->order_status_id){
-       // $request['order_status_id'] = 1;
-       // }
-       //get logged user from access_token
-    //    $request['user_id'] = $request->user()->id;
-    //    $imageName = basename($request->imageFile->store("public"));
-    //    $request['image'] = $imageName;
-    //    $order = Order::create($request->all());
-    //    session()->flash('msg', "s: Order product create successfully ");
-    //    sleep(4);
-      $request['user_id'] = $request->user()->id;
-       $imageName = basename($request->image->store("public"));
-       $request['image '] = $imageName;
+    
+
+      
+       $request['user_id'] = $request->user()->id;
+
+       $file = $request->image->getClientOriginalName(); //Get Image Name
+
+       $extension = $request->image->getClientOriginalExtension(); //Get Image Extension
+
+       $fileName = $file.'.'.$extension; //Concatenate both to get FileName (eg: file.jpg)
+       $request['image '] = $fileName;
+       
        $order = Order::create($request->all());
        session()->flash('msg', "s: Order create successfully ");
        return redirect(route("user-order.index"));
-       return view('frontend.home.index');
 
        //dd($request->all());
 

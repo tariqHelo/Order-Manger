@@ -1,4 +1,6 @@
 @extends('admin.app')
+@section("title", "Manage Orders")
+
 @section('content')
 @include('shared.msg')
       
@@ -6,27 +8,26 @@
         <div class="col-sm-2">
             <select name="product_id"  class="form-control">
                 <option value=''>Any Product</option>
-                {{-- @foreach($products as $product)
+                @foreach($products as $product)
                     <option {{ $product->id==request()->get('product_id')?"selected":""}} value='{{ $product->id}}'>{{ $product->title}}</option>
-                @endforeach --}}
+                @endforeach
             </select>
         </div>
 
         <div class="col-sm-2">
             <select name="user_id"  class="form-control">
                 <option value=''>Any Customer</option>
-                {{-- @foreach($users as $user)
+                @foreach($users as $user)
                     <option {{ $user->id==request()->get('user_id')?"selected":""}} value='{{ $user->id}}'>{{ $user->name}}</option>
-                @endforeach --}}
+                @endforeach
             </select>
         </div>
-
         <div class="col-sm-2">
             <select name="order_status_id" class="form-control">
                 <option value="">Any status</option>
-                {{-- @foreach($status as $status)
+                @foreach($status as $status)
                     <option {{ $status->id==request()->get('order_status_id')?"selected":""}} value='{{ $status->id}}'>{{ $status->title}}</option>
-                @endforeach --}}
+                @endforeach
             </select>
         </div>
         <div class='col-sm-2'>
@@ -39,7 +40,7 @@
         </div>
     </form>
 
-
+    @if($orders->count()>0)
         <table align="center" class="table mt-3 table-striped table-bordered">
             <thead>
             <tr>
@@ -64,7 +65,7 @@
                     <td>{{ $order->user->name??'' }}</td>
                     <td>{{ $order->quantity }}</td>
                     {{--                    <td>{{ $order->order_status_id}}</td>--}}
-                 <td>
+                    <td>
                         @if($order->order_status_id==1)
                             <span class="btn btn-warning btn-sm">Pending</span>
                         @elseif($order->order_status_id==2)
@@ -75,30 +76,41 @@
                     </td>
                     <td>
                         @if($order->order_status_id==1)
-                            <a href="" style="width: 80px" class="btn btn-success btn-sm" >Done</a>
-                            <a href="" style="width: 80px" class="btn btn-danger btn-sm" >Cancel</a>
+                            <a href="{{route('order.done',$order->id)}}" style="width: 80px" class="btn btn-success btn-sm" >Done</a>
+                            <a href="{{route('order.cancel',$order->id)}}" style="width: 80px" class="btn btn-danger btn-sm" >Cancel</a>
                         @elseif($order->order_status_id==2)
-                            <a href="" style="width: 80px" class="btn btn-warning btn-sm" >Pending</a>
-                            <a href="" style="width: 80px" class="btn btn-danger btn-sm" >Cancel</a>
+                            <a href="{{route('order.pending',$order->id)}}" style="width: 80px" class="btn btn-warning btn-sm" >Pending</a>
+                            <a href="{{route('order.cancel',$order->id)}}" style="width: 80px" class="btn btn-danger btn-sm" >Cancel</a>
                         @elseif($order->order_status_id==3)
-                            <a href="" style="width: 80px" class="btn btn-success btn-sm" >Done</a>
-                            <a href="" style="width: 80px" class="btn btn-warning btn-sm" >Pending</a>
+                            <a href="{{route('order.done',$order->id)}}" style="width: 80px" class="btn btn-success btn-sm" >Done</a>
+                            <a href="{{route('order.pending',$order->id)}}" style="width: 80px" class="btn btn-warning btn-sm" >Pending</a>
+
                         @endif
                     </td>
                     <td>
-                        <a href="" class="btn btn-primary btn-sm"><i
+                        <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary btn-sm"><i
                                 class='fa fa-eye'></i></a>
-                        <a href="">
+
+
+                        <a href="{{ route('delete-order', $order->id) }}">
                             <button onclick='return confirm("Are you sure??")' type="submit" class="btn btn-danger btn-sm">
                                 <i class='fa fa-trash'></i></button>
                         </a>
-                </td>
+
+
+                    </td>
+                     
                 </tr>
                
             @endforeach
          
             </tbody>
         </table>
+        
+          {{ $orders->links() }}
+    @else
+        <div class="alert alert-warning">Sorry, there is no results to your search</div>
+    @endif
 @endsection
 
 

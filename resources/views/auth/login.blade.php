@@ -65,12 +65,13 @@ License: You must have a valid license purchased only from themeforest(the above
 				<h3 class="form-title font-green">Sign In</h3>
                 <div class="alert alert-danger display-hide">
                     <button class="close" data-close="alert"></button>
-                    <span> Enter any username and password. </span>
+                    <span> Enter any email and password. </span>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                     <label class="control-label visible-ie8 visible-ie9">Email</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="email" autocomplete="off" placeholder="email" name="email" /> </div>                <div class="form-group">
+                    <input class="form-control form-control-solid placeholder-no-fix" type="email" autocomplete="off" placeholder="الإيميل" name="email" /> </div>               
+                     <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Password</label>
                     <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
                 <div class="form-actions">
@@ -118,33 +119,33 @@ License: You must have a valid license purchased only from themeforest(the above
             </form> --}}
             <!-- END FORGOT PASSWORD FORM -->
             <!-- BEGIN REGISTRATION FORM -->
-<form class="register-form" method="POST" action="{{ route('register') }}">
-    @csrf
-    <h3 class="font-green">صفحة التسجيل للنظام </h3>
-    <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9">إسم المستخدم</label>
-        <input class="form-control placeholder-no-fix" name="name" type="text" placeholder="إسم المستخدم"  /> </div>
-    <div class="form-group">
-    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-    <label class="control-label visible-ie8 visible-ie9">إسم المتجر</label>
-    <input class="form-control placeholder-no-fix"  name="store" type="text" placeholder="المتجر" /> </div>
+            <form class="register-form" method="POST" action="{{ route('register') }}">
+                @csrf
+                <h3 class="font-green">صفحة التسجيل للنظام </h3>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">إسم المستخدم</label>
+                    <input class="form-control placeholder-no-fix" name="name" type="text" placeholder="إسم المستخدم"  /> </div>
+                <div class="form-group">
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                <label class="control-label visible-ie8 visible-ie9">إسم المتجر</label>
+                <input class="form-control placeholder-no-fix"  name="store" type="text" placeholder="المتجر" /> </div>
 
-    <div class="form-group">
-        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-        <label class="control-label visible-ie8 visible-ie9">الإيميل</label>
-        <input class="form-control placeholder-no-fix"  name="email"  type="text" placeholder="الإيميل"/> </div>
+                <div class="form-group">
+                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">الإيميل</label>
+                    <input class="form-control placeholder-no-fix"  name="email"  type="text" placeholder="الإيميل"/> </div>
 
-    <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9">كلمة السر</label>
-        <input class="form-control placeholder-no-fix"  name="password" type="password" autocomplete="off"  placeholder="كلمة السر" /> </div>
-    <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9">تأكيد كلمة السر</label>
-        <input class="form-control placeholder-no-fix" name="password_confirmation" type="password" autocomplete="off" placeholder="تأكيد كلمة السر"  /> </div>
-    <div class="form-actions">
-        <button type="button" id="register-back-btn" class="btn green btn-outline">Back</button>
-        <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
-    </div>
-</form>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">كلمة السر</label>
+                    <input class="form-control placeholder-no-fix"  name="password" type="password" autocomplete="off"  placeholder="كلمة السر" /> </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">تأكيد كلمة السر</label>
+                    <input class="form-control placeholder-no-fix" name="password_confirmation" type="password" autocomplete="off" placeholder="تأكيد كلمة السر"  /> </div>
+                <div class="form-actions">
+                    <button type="button" id="register-back-btn" class="btn green btn-outline">Back</button>
+                    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
+                </div>
+            </form>
             <!-- END REGISTRATION FORM -->
         </div>
         <div class="copyright"> 2020 صفحة التسجيل للنظام </div>

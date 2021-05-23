@@ -22,6 +22,7 @@
                         </a>
                     </li> 
                     @endcan
+                     @can('settings')
                     <li class="nav-item">
                     <a href="{{route('settings.index')}}" class="nav-link nav-toggle">
                             <i class="icon-bar-chart"></i>
@@ -29,6 +30,7 @@
                             <span class="arrow"></span>
                         </a>
                     </li>
+                    @endcan
                     @can('orders')
                     <li class="nav-item">
                         <a href="{{route('orders.index')}}" class="nav-link nav-toggle">

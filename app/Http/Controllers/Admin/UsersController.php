@@ -39,13 +39,13 @@ class UsersController extends Controller
         $user->roles()->sync($request->input('roles', []));
         \Session::flash("msg", "تم إضافة المستخدم بنجاح");
 
-        return redirect()->route('users.index');
+        return redirect()->route('dashboard');
 
     }
 
     public function edit(User $user)
     {
-       abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       //abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('title', 'id');
 

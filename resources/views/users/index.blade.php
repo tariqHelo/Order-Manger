@@ -25,14 +25,17 @@
                             {{ trans('cruds.user.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            الإسم
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.email') }}
+                            الإيميل
+                        </th>
+                        <th>
+                            المتجر
                         </th>
                     
                         <th>
-                            {{ trans('cruds.user.fields.roles') }}
+                          الرولز
                         </th>
                         <th>
                             &nbsp;
@@ -42,7 +45,6 @@
                 <tbody>
                     @foreach($users as $key => $user)
                         <tr data-entry-id="{{ $user->id }}">
-                           
                             <td>
                                 {{ $user->id ?? '' }}
                             </td>
@@ -52,7 +54,9 @@
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
-                          
+                            <td>
+                                {{ $user->store ?? '' }}
+                            </td>
                             <td>
                                 @foreach($user->roles as $key => $item)
                                     <span class="badge badge-info">{{ $item->title }}</span>

@@ -14,8 +14,8 @@ class SettingController extends Controller
      */
     public function index()
     {
-      $settings = Setting::get();
-      return view('settings.index')->with('settings' , $settings);
+      $setting = Setting::first();
+      return view('settings.index')->with('setting' , $setting);
     }
 
     /**
@@ -36,31 +36,23 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        
+         $data = [
+        'note' => $request->has("note") && $request->note =="on" ? 1 : 0,
+        'name' => $request->has("name") && $request->name =="on" ? 1 : 0,
+        'quantity' => $request->has("quantity") && $request->quantity =="on" ? 1 : 0,
+        'image' => $request->has("image") && $request->image =="on" ? 1 : 0
+        ];
+        $order = Setting::find(1);
+       // dd($order , $data , $request->all());
+        if($order != null):
+            $order->update($data);
+        endif;
+        return redirect()->back();
 
-         if($request->name == 0 || $request->note == 0 
-         || $request->quantity == 0 ||
-            $request->image == 0)
-            {
-                 dd($request->all());
-            }
-                // if($validater->fails()){
-                // return redirect()->back()
-                // ->withErrors($validater)
-                // ->withInput();
-                // }
-                // $settings = Setting::first();
-                // if($settings) {
-                //     $settings->update($request->all());
-                //     session()->flash('msg' , 's: settings updated successfully');
-                //     return redirect(route('settings'));
-                // } else {
-                //     Setting::create($request->all());
-                //     session()->flash('msg' , 's: settings created successfully');
-                //     return redirect(route('settings'));
-                // }
+        
     }
-
+//one min
     /**
      * Display the specified resource.
      *

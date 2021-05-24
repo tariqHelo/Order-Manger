@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-
+use Illuminate\Pagination\paginate;
 class OrderStatusController extends Controller
 {
     /**
@@ -17,10 +17,15 @@ class OrderStatusController extends Controller
      */
    public function index()
     { 
-        $user_id = \request()->get('user_id') ;
-        $product_id = \request()->get('product_id') ;
-        $order_status_id = \request()->get('order_status_id');
-        $orders=Order::orderBy('id','desc');
+        
+        $orders = Order::orderBy('id','DESC')->where('user_id' , auth()->id())->get();
+
+       // dd($orders);
+
+      $user_id = \request()->get('user_id') ;
+      $product_id = \request()->get('product_id') ;
+      $order_status_id = \request()->get('order_status_id');
+
         if ($user_id!="")
         {
             $orders->where('user_id' , $user_id);
@@ -31,16 +36,16 @@ class OrderStatusController extends Controller
         }
         if ($order_status_id !=""){
 
-        $orders->where('order_status_id' , $order_status_id);
+           $orders->where('order_status_id' , $order_status_id);
         }
-            $status=OrderStatus::all();
+           $status=OrderStatus::all();
             $users=User::all();
             $products=Product::orderby('name')->get();
-            $orders=$orders->paginate(10)->appends([
-            "user_id"=>$user_id,
-            "product_id"=>$product_id,
-            "order_status_id"=>$order_status_id
-            ]);
+            // $orders = $orders->paginate(2)->appends([
+            // "user_id"=>$user_id,
+            // "product_id"=>$product_id,
+            // "order_status_id"=>$order_status_id
+            // ]);
 
 
 

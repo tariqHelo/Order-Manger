@@ -39,7 +39,7 @@
         </div>
     </form>
 
-    @if($orders->count()>0)
+    {{-- @if($orders->count()>0) --}}
         <table align="center" class="table mt-3 table-striped table-bordered">
             <thead>
             <tr>
@@ -55,35 +55,32 @@
             </thead>
             <tbody>
 
-       @foreach($orders as $order)
-                <tr>
-                    <td>{{ $order->id}}</td>
-                    <td>{{ $order->name}}</td>
-                    <td> <img src='{{ asset("storage/".$order->image) }}' width='100' /></td>
-                    <td>{{ $order->user->name??'' }}</td>
-                    <td>{{ $order->quantity }}</td>
-                    {{--                    <td>{{ $order->order_status_id}}</td>--}}
-                    <td>
-                        @if($order->order_status_id==1)
-                            <span class="btn btn-warning btn-sm">Pending</span>
-                        @elseif($order->order_status_id==2)
-                            <span class="btn btn-success btn-sm">Done</span>
-                        @else($order->order_status_id==3)
-                            <span class="btn btn-danger btn-sm">Cancel</span>
-                        @endif
-                    </td>
-                    
-                </tr>
-               
-            @endforeach
-         
+                @foreach($orders as $order)
+                        <tr>
+                            <td>{{ $order->id}}</td>
+                            <td>{{ $order->name}}</td>
+                            <td> <img src='{{ asset("/storage/public/".$order->image) }}' width='100' /></td>
+                            <td>{{ $order->user->name??'' }}</td>
+                            <td>{{ $order->quantity }}</td>
+                            {{--                    <td>{{ $order->order_status_id}}</td>--}}
+                            <td>
+                                @if($order->order_status_id==1)
+                                    <span class="btn btn-warning btn-sm">Pending</span>
+                                @elseif($order->order_status_id==2)
+                                    <span class="btn btn-success btn-sm">Done</span>
+                                @else($order->order_status_id==3)
+                                    <span class="btn btn-danger btn-sm">Cancel</span>
+                                @endif
+                            </td>
+                            
+                        </tr>
+                @endforeach
             </tbody>
         </table>
-        
-          {{ $orders->links() }}
+       {{-- {{ $orders->links() }}
     @else
         <div class="alert alert-warning">Sorry, there is no results to your search</div>
-    @endif
+    @endif --}}
 @endsection
 
 

@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">الإسم  </label>
                             <div class="col-md-9">
-                                <input type="text" name="name" placeholder="الإسم" class="form-control" />
+                                <input type="text" name="title" placeholder="الإسم" class="form-control" />
                             </div>
                         </div>
                     </div>

@@ -88,7 +88,7 @@
                         <label for="form_control_1">الصورة</label>
                     </div>
                       @if($products->image)
-                          <img src="{{ asset("storage/".$products->image) }}" width='80' class='img-thumbnail mt-3' />
+                          <img src="{{ asset("/storage/public/".$products->image) }}" width='100' class='img-thumbnail mt-3' />
                         @endif
                 </div>
                 <div class="form-body">

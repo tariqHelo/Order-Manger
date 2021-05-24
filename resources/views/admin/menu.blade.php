@@ -39,13 +39,13 @@
                             <span class="arrow"></span>
                         </a>
                     </li> 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="" class="nav-link nav-toggle">
                             <i class="icon-puzzle"></i>
                             <span class="title"> الطلبات المكتملة</span>
                             <span class="arrow"></span>
                         </a>
-                    </li>    
+                    </li>     --}}
                     @endcan  
                     @can('user_access')
                         <li class="nav-item ">
@@ -73,7 +73,7 @@
                             </a>  
                         </li>   
                      @endcan
-                     @can('order_status')
+                    {{-- @can('order_status')
                         <li class="nav-item ">
                             <a href="#" class="nav-link nav-toggle">
                                 <i class="icon-pointer"></i>
@@ -91,8 +91,8 @@
                                 <span class="arrow"></span>
                             </a>
                         </li>
-                        @endcan
-                        @can('profile')
+                    @endcan 
+                    @can('profile')
                         <li class="nav-item">
                             <a href="#" class="nav-link nav-toggle">
                                 <i class="icon-wallet"></i>
@@ -100,7 +100,7 @@
                                 <span class="arrow"></span>
                             </a> 
                         </li>  
-                        @endcan   
+                    @endcan   --}}
                         {{-- <li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-bar-chart"></i>

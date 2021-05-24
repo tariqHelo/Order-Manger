@@ -91,7 +91,7 @@
                                                     </td>
                                                     <td> {{$product->id}} </td>
                                                     <td> {{$product->name}} </td>
-                                                    <td> <img src='{{ asset("storage/".$product->image) }}' width='100' /></td>
+                                                    <td> <img src='{{ asset("/storage/public/".$product->image) }}' width='100' /></td>
                                                     <td> {{$product->quantity}} </td>
                                                     <td> {{$product->note}} </td>
                                                 <td> 

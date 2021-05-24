@@ -29,7 +29,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="test">
                                         <thead>
                                             <tr>
                                                 <th> name </th>
@@ -40,15 +40,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($settings as $setting)
+                                            {{-- @foreach ($settings as $setting) --}}
                                             <tr class="odd gradeX">
                         
                                                 <td><input name="name"     type="checkbox"  {{$setting->name?"checked":"" }}/></td>
                                                 <td><input name="image"    type="checkbox"  {{$setting->image?"checked":"" }}/></td>
                                                 <td><input name="note"     type="checkbox"  {{$setting->note?"checked":"" }}/></td>
-                                                <td><input name="quantity" type="checkbox"  {{$setting->quantity?"checked":"" }}/></td>
+                                                <td><input name="quantity"    type="checkbox"  {{$setting->quantity?"checked":"" }}/></td>
                                             </tr>   
-                                            @endforeach
+                                            {{-- @endforeach --}}
                                     
                                          </tbody>
                                     </table>

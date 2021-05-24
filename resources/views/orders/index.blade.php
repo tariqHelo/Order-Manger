@@ -45,7 +45,7 @@
             <thead>
             <tr>
               <th> Order ID</th>
-                <th>name</th>
+                <th>title</th>
                 <th>Image</th>
                 <th>user</th>
                 <th> Quantity</th>
@@ -60,8 +60,8 @@
        @foreach($orders as $order)
                 <tr>
                     <td>{{ $order->id}}</td>
-                    <td>{{ $order->name}}</td>
-                    <td> <img src='{{ asset("storage/".$order->image) }}' width='100' /></td>
+                    <td>{{ $order->title}}</td>
+                    <td> <img src='{{ asset("/storage/public/".$order->image) }}' width='100' /></td>
                     <td>{{ $order->user->name??'' }}</td>
                     <td>{{ $order->quantity }}</td>
                     {{--                    <td>{{ $order->order_status_id}}</td>--}}

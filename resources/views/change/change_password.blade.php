@@ -29,7 +29,7 @@
                 
                 <div class="form-actions noborder">
                     <button type="submit" class="btn btn-success">Change Password</button>
-                    <a type="reset" href="" class="btn default">Cancel</a>
+                <a type="reset" href="{{route('dashboard')}}" class="btn default">Cancel</a>
                 </div>
             </form>
         </div>

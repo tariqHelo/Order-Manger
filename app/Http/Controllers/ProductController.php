@@ -42,14 +42,17 @@ class ProductController extends Controller
         //   'quantity' => 'required|integer',
         //   'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         //   ));
-        //dd($request->all());
-        // $file = $request->file('img');
-        // $extension = $request->image->extension();
-        // $path = $request->image->store('public');
+       $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-         $imageName = basename($request->image->store("public"));
-         $request['image '] = $imageName;
-         $order = Product::create($request->all());
+        $image = basename($request->image->store("public"));
+         Product::create([
+        'image' => $image,
+        'note' => $request->note,
+        'quantity' => $request->quantity,
+        'name' => $request->name,
+        ]);
          session()->flash('msg', "s: Product create successfully ");
          return redirect(route("products.index"));
     }

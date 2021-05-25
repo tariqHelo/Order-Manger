@@ -20,36 +20,7 @@ class OrderStatusController extends Controller
         
         $orders = Order::orderBy('id','DESC')->where('user_id' , auth()->id())->get();
 
-       // dd($orders);
-
-      $user_id = \request()->get('user_id') ;
-      $product_id = \request()->get('product_id') ;
-      $order_status_id = \request()->get('order_status_id');
-
-        if ($user_id!="")
-        {
-            $orders->where('user_id' , $user_id);
-        }
-        if ($product_id!=""){
-
-            $orders->where('product_id' , $product_id);
-        }
-        if ($order_status_id !=""){
-
-           $orders->where('order_status_id' , $order_status_id);
-        }
-           $status=OrderStatus::all();
-            $users=User::all();
-            $products=Product::orderby('name')->get();
-            // $orders = $orders->paginate(2)->appends([
-            // "user_id"=>$user_id,
-            // "product_id"=>$product_id,
-            // "order_status_id"=>$order_status_id
-            // ]);
-
-
-
-        return view('statusOrder.index',compact('orders','status','users','products'));
+        return view('statusOrder.indexs',compact('orders'));
     }
 
 

@@ -108,7 +108,7 @@ class OrderController extends Controller
         
         $orders=Order::all();
         $order = Order::find($id);
-        return view('dashboard.orders.show')->with('order' , $order)->with('orders',$orders);
+        return view('orders.show')->with('order' , $order)->with('orders',$orders);
     }
     public function destroy($id)
     {
